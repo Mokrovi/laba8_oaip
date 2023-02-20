@@ -51,7 +51,6 @@
             this.buttonClear = new System.Windows.Forms.Button();
             this.buttonSelectFigure = new System.Windows.Forms.Button();
             this.buttonMove = new System.Windows.Forms.Button();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -309,20 +308,11 @@
             this.buttonMove.UseVisualStyleBackColor = true;
             this.buttonMove.Click += new System.EventHandler(this.buttonMove_Click);
             // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(536, 579);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(151, 28);
-            this.comboBox2.TabIndex = 17;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(981, 684);
-            this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.buttonMove);
             this.Controls.Add(this.buttonSelectFigure);
             this.Controls.Add(this.buttonClear);
@@ -372,6 +362,5 @@
         private Button buttonClear;
         private Button buttonSelectFigure;
         private Button buttonMove;
-        private ComboBox comboBox2;
     }
 }

@@ -15,19 +15,18 @@ namespace laba_8_oaip
         public void Start()
         {
             Bitmap bitmap = new Bitmap(pictureBox1.ClientSize.Width, pictureBox1.ClientSize.Height);
-            Pen pen = new Pen(Color.Black, 5);
+            Pen pen = new Pen(Color.Black, 3);
             Init.bitmap = bitmap;
             Init.pictureBox = pictureBox1;
             Init.pen = pen;
-            Init.combo = comboBox1;
+            //Init.combo = comboBox1;
             ShapeContainer shape = new ShapeContainer();
             labelCountPoints.Visible = false;
             textBoxCountPoints.Visible = false;
         }
         public void Clear()
         {
-            Graphics g = Graphics.FromImage(Init.bitmap);
-            g.Clear(Color.White);
+            
         }
 
         public static class Init
@@ -35,7 +34,7 @@ namespace laba_8_oaip
             public static Bitmap bitmap;
             public static Pen pen;
             public static PictureBox pictureBox;
-            public static ComboBox combo;
+            //public static ComboBox combo;
             public static List<Point> points = new List<Point>();
         }
         abstract public class Figure
@@ -83,7 +82,7 @@ namespace laba_8_oaip
                 check();
                 Square square = new Square(X, Y, Width);
                 square.Draw();
-                Init.combo.Items.Add("Квадрат " + repit);
+                comboBox1.Items.Add("Квадрат " + repit);
                 ShapeContainer.AddFigure(square);
             }
             if (radioButton2.Checked)
@@ -91,7 +90,7 @@ namespace laba_8_oaip
                 check();
                 Round round = new Round(X, Y, Width);
                 round.Draw();
-                Init.combo.Items.Add("Круг "+ repit);
+                comboBox1.Items.Add("Круг "+ repit);
                 ShapeContainer.AddFigure(round);
             }
             if (radioButton3.Checked)
@@ -99,7 +98,7 @@ namespace laba_8_oaip
                 check();
                 Figure rectangle = new Rectangle(X,Y,Width,Height);
                 rectangle.Draw();
-                Init.combo.Items.Add("Прямоугольник " + repit);
+                comboBox1.Items.Add("Прямоугольник " + repit);
                 ShapeContainer.AddFigure(rectangle);
             }
             if (radioButton4.Checked )
@@ -107,7 +106,7 @@ namespace laba_8_oaip
                 check();
                 Elips elips = new Elips(X,Y,Width,Height);
                 elips.Draw();
-                Init.combo.Items.Add("Элипс " + repit);
+                comboBox1.Items.Add("Элипс " + repit);
                 ShapeContainer.AddFigure(elips);
             }
             if (radioButton5.Checked )
@@ -122,7 +121,7 @@ namespace laba_8_oaip
                 }
                 Polygon polygon = new Polygon();
                 polygon.Draw();
-                Init.combo.Items.Add("Многоугольник " + repit);
+                comboBox1.Items.Add("Многоугольник " + repit);
                 ShapeContainer.AddFigure(polygon);
             }
             if (radioButton6.Checked)
@@ -136,7 +135,7 @@ namespace laba_8_oaip
                 }
                 Polygon polygon = new Polygon();
                 polygon.Draw();
-                Init.combo.Items.Add("Треугольник " + repit);
+                comboBox1.Items.Add("Треугольник " + repit);
                 ShapeContainer.AddFigure(polygon);
             }
             if (radioButton7.Checked)
@@ -147,12 +146,12 @@ namespace laba_8_oaip
                
                 Round round1 = new Round(poinx, poiny + 50, 50);
                 round1.Draw();
-                Init.combo.Items.Add("Круг " + repit);
+                comboBox1.Items.Add("Круг " + repit);
                 ShapeContainer.AddFigure(round1);
                 repit++;
                 Round round2 = new Round(poinx-10, poiny + 100, 70);
                 round2.Draw();
-                Init.combo.Items.Add("Круг " + repit);
+                comboBox1.Items.Add("Круг " + repit);
                 ShapeContainer.AddFigure(round2);
                 repit++;
 
@@ -164,19 +163,19 @@ namespace laba_8_oaip
                 Init.points.Add(new Point(poinx + 80, poiny + 75));
                 Polygon polygon = new Polygon();
                 polygon.Draw();
-                Init.combo.Items.Add("Треугольник " + repit);
+                comboBox1.Items.Add("Треугольник " + repit);
                 ShapeContainer.AddFigure(polygon);
 
                 // Прямоугольник
 
                 Figure rectangle = new Rectangle(poinx+ 12, poiny+5, 25, 45);
                 rectangle.Draw();
-                Init.combo.Items.Add("Прямоугольник " + repit);
+                comboBox1.Items.Add("Прямоугольник " + repit);
                 ShapeContainer.AddFigure(rectangle);
                 repit++;
                 Figure rectangle1 = new Rectangle(poinx+2, poiny + 35, 45, 15);
                 rectangle1.Draw();
-                Init.combo.Items.Add("Прямоугольник " + repit);
+                comboBox1.Items.Add("Прямоугольник " + repit);
                 ShapeContainer.AddFigure(rectangle1);
             }
             repit++;
@@ -220,8 +219,12 @@ namespace laba_8_oaip
         {
             Figure figyra = ShapeContainer.figureList[comboBox1.SelectedIndex];
             figyra.Selection();
-            Init.combo.Items.Remove(comboBox1.SelectedIndex);
+            comboBox1.Items.RemoveAt(comboBox1.SelectedIndex);
             ShapeContainer.figureList.Remove(figyra);
+            for(int i=0; i < ShapeContainer.figureList.Count; i++)
+            {
+                ShapeContainer.figureList[i].Draw();
+            }
         }
 
         private void buttonMove_Click(object sender, EventArgs e)
@@ -253,7 +256,8 @@ namespace laba_8_oaip
 
         private void buttonClear_Click(object sender, EventArgs e)
         {
-            Init.combo.Items.Clear();
+            comboBox1.Items.Clear();
+           
         }
 
         private void radioButton5_Click(object sender, EventArgs e)
