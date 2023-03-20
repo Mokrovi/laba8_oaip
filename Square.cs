@@ -15,6 +15,7 @@ namespace laba_8_oaip
             this.y = y;
             this.width = width;
             this.height = width;
+            this.mg = false;
         }
         public override void Draw()
         {

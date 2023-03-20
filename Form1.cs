@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Drawing;
+using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -10,22 +11,18 @@ namespace laba_8_oaip
         public Form1()
         {
             InitializeComponent();
-            Start();
+            Form1_Load();
         }
-        public void Start()
+        public void Form1_Load()
         {
             Bitmap bitmap = new Bitmap(pictureBox1.ClientSize.Width, pictureBox1.ClientSize.Height);
             Pen pen = new Pen(Color.Black, 3);
+            Pen penClear = new Pen(Color.White, 3);
             Init.bitmap = bitmap;
             Init.pictureBox = pictureBox1;
             Init.pen = pen;
-            //Init.combo = comboBox1;
+
             ShapeContainer shape = new ShapeContainer();
-            labelCountPoints.Visible = false;
-            textBoxCountPoints.Visible = false;
-        }
-        public void Clear()
-        {
             
         }
 
@@ -33,9 +30,9 @@ namespace laba_8_oaip
         {
             public static Bitmap bitmap;
             public static Pen pen;
+            public static Pen penClear;
             public static PictureBox pictureBox;
-            //public static ComboBox combo;
-            public static List<Point> points = new List<Point>();
+            
         }
         abstract public class Figure
         {
@@ -43,6 +40,11 @@ namespace laba_8_oaip
             public int y;
             public int width;
             public int height;
+
+            
+            public int CountOfPoints;
+            public bool mg;
+            
             abstract public void Draw();
             abstract public void Selection();
             abstract public void MoveTo(int x, int y);
@@ -60,13 +62,11 @@ namespace laba_8_oaip
             {
                 figureList.Add(figure);
             }
-            public static void Clear()
-            {
-                figureList.Clear();
-            }
+            
         }
 
         public int X, Y, Width, Height;
+
         private bool check()
         {
             if (int.TryParse(Cordinate.Text.Split(' ')[0], out X) && int.TryParse(Cordinate.Text.Split(' ')[1], out Y) && int.TryParse(ColWidth.Text, out Width) && int.TryParse(ColHeight.Text, out Height)) return (true);
@@ -111,72 +111,52 @@ namespace laba_8_oaip
             }
             if (radioButton5.Checked )
             {
-                
-                Init.points = new List<Point>();
-                for (int i = 0; i < Convert.ToInt32(textBoxCountPoints.Text); i++)
+                List<int> pointsx = new List<int>();
+                List<int> pointsy = new List<int>();
+                for(int i = 0; i < Cordinate.Text.Split(' ').Length; i++)
                 {
-                    int a = Convert.ToInt32(Cordinate.Text.Split(' ')[i]), b = Convert.ToInt32(Cordinate.Text.Split(' ')[i + 1]);
-                    Point poin = new Point(a, b);
-                    Init.points.Add(poin);
+                    if(i % 2 == 0)
+                    {
+                        pointsx.Add(Convert.ToInt32(Cordinate.Text.Split(' ')[i]));
+                    }
+                    else
+                    {
+                        pointsy.Add(Convert.ToInt32(Cordinate.Text.Split(' ')[i]));
+                    }
                 }
-                Polygon polygon = new Polygon();
+                Polygon polygon = new Polygon(Convert.ToInt32(textBoxCountPoints.Text), pointsx, pointsy);
                 polygon.Draw();
                 comboBox1.Items.Add("Многоугольник " + repit);
                 ShapeContainer.AddFigure(polygon);
             }
             if (radioButton6.Checked)
             {
-                Init.points = new List<Point>();
-                for (int i = 0; i < 3; i++)
+                List<int> pointsx = new List<int>();
+                List<int> pointsy = new List<int>();
+                for (int i = 0; i < Cordinate.Text.Split(' ').Length; i++)
                 {
-                    int a = Convert.ToInt32(Cordinate.Text.Split(' ')[i]), b = Convert.ToInt32(Cordinate.Text.Split(' ')[i + 1]);
-                    Point poin = new Point(a, b);
-                    Init.points.Add(poin);
+                    if (i % 2 == 0)
+                    {
+                        pointsx.Add(Convert.ToInt32(Cordinate.Text.Split(' ')[i]));
+                    }
+                    else
+                    {
+                        pointsy.Add(Convert.ToInt32(Cordinate.Text.Split(' ')[i]));
+                    }
                 }
-                Polygon polygon = new Polygon();
-                polygon.Draw();
-                comboBox1.Items.Add("Треугольник " + repit);
-                ShapeContainer.AddFigure(polygon);
+                Tringular tri = new Tringular(3, pointsx, pointsy);
+                tri.Draw();
+                comboBox1.Items.Add("Триугольник " + repit);
+                ShapeContainer.AddFigure(tri);
             }
             if (radioButton7.Checked)
             {
+                check();
                 int poinx = Convert.ToInt32(Cordinate.Text.Split(' ')[0]), poiny = Convert.ToInt32(Cordinate.Text.Split(' ')[1]);
-
-                // два круга
-               
-                Round round1 = new Round(poinx, poiny + 50, 50);
-                round1.Draw();
-                comboBox1.Items.Add("Круг " + repit);
-                ShapeContainer.AddFigure(round1);
-                repit++;
-                Round round2 = new Round(poinx-10, poiny + 100, 70);
-                round2.Draw();
-                comboBox1.Items.Add("Круг " + repit);
-                ShapeContainer.AddFigure(round2);
-                repit++;
-
-                // треугольник 
-
-                Init.points = new List<Point>();
-                Init.points.Add(new Point(poinx + 40, poiny + 65));                
-                Init.points.Add(new Point(poinx + 40, poiny + 85));
-                Init.points.Add(new Point(poinx + 80, poiny + 75));
-                Polygon polygon = new Polygon();
-                polygon.Draw();
-                comboBox1.Items.Add("Треугольник " + repit);
-                ShapeContainer.AddFigure(polygon);
-
-                // Прямоугольник
-
-                Figure rectangle = new Rectangle(poinx+ 12, poiny+5, 25, 45);
-                rectangle.Draw();
-                comboBox1.Items.Add("Прямоугольник " + repit);
-                ShapeContainer.AddFigure(rectangle);
-                repit++;
-                Figure rectangle1 = new Rectangle(poinx+2, poiny + 35, 45, 15);
-                rectangle1.Draw();
-                comboBox1.Items.Add("Прямоугольник " + repit);
-                ShapeContainer.AddFigure(rectangle1);
+                SnowMan snowMan = new SnowMan(poinx, poiny, Width, Height);
+                snowMan.Draw();
+                comboBox1.Items.Add("Снеговик " + repit);
+                ShapeContainer.AddFigure(snowMan);
             }
             repit++;
         }
@@ -188,7 +168,7 @@ namespace laba_8_oaip
         private void radioButton1_Click(object sender, EventArgs e)
         {
             labelCountPoints.Visible = false;
-            textBoxCountPoints.Visible = false;
+            textBoxCountPoints.Visible = true;
         }
 
         private void radioButton2_Click(object sender, EventArgs e)
@@ -209,6 +189,11 @@ namespace laba_8_oaip
             textBoxCountPoints.Visible = false;
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private void radioButton6_CheckedChanged(object sender, EventArgs e)
         {
             labelCountPoints.Visible = false;
@@ -225,54 +210,33 @@ namespace laba_8_oaip
             {
                 ShapeContainer.figureList[i].Draw();
             }
+            
         }
 
         private void buttonMove_Click(object sender, EventArgs e)
         {
             Figure figyra = ShapeContainer.figureList[comboBox1.SelectedIndex];
-            if(!radioButton5.Checked && !radioButton6.Checked)
-            {
-                check();
-                figyra.MoveTo(X, Y);
-            }
-            else
-            {
-                figyra.Selection();
-                Init.points = new List<Point>();
-                for (int i = 0; i < Convert.ToInt32(textBoxCountPoints.Text); i++)
+            int x = Convert.ToInt32(textBoxMove.Text.Split(' ')[0]), y = Convert.ToInt32(textBoxMove.Text.Split(' ')[1]);
+            if (pictureBox1.ClientSize.Width >= figyra.x + x + figyra.width && pictureBox1.ClientSize.Height >= figyra.y + y + figyra.height)
                 {
-                    int a = Convert.ToInt32(Cordinate.Text.Split(' ')[i]), b = Convert.ToInt32(Cordinate.Text.Split(' ')[i + 1]);
-                    Point poin = new Point(a, b);
-                    Init.points.Add(poin);
+                    if (figyra.y + y >= 0 && figyra.x + x >= 0)
+                    {
+                        figyra.MoveTo(x, y);
+                        for (int i = 0; i < ShapeContainer.figureList.Count; i++)
+                        {
+                            ShapeContainer.figureList[i].Draw();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Невозможно передвинуть фигуру");
+                    }
                 }
-                figyra.MoveTo(X, Y);
-            }
+             else
+                {
+                    MessageBox.Show("Невозможно передвинуть фигуру");
+                }
         }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonClear_Click(object sender, EventArgs e)
-        {
-            comboBox1.Items.Clear();
-           
-        }
-
-        private void radioButton5_Click(object sender, EventArgs e)
-        {
-            labelCountPoints.Visible = true;
-            textBoxCountPoints.Visible = true;
-            Init.points = new List<Point>();
-        }
-
-        private void radioButton6_Click(object sender, EventArgs e)
-        {
-            labelCountPoints.Visible = false;
-            textBoxCountPoints.Visible = false;
-        }
-
-        
-    }
+            
+    }     
 }

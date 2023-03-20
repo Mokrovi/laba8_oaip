@@ -36,6 +36,8 @@
             this.ColWidth = new System.Windows.Forms.TextBox();
             this.ColHeight = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBoxMove = new System.Windows.Forms.TextBox();
+            this.labelMove = new System.Windows.Forms.Label();
             this.textBoxCountPoints = new System.Windows.Forms.TextBox();
             this.labelCountPoints = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -48,7 +50,6 @@
             this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.radioButton6 = new System.Windows.Forms.RadioButton();
             this.radioButton7 = new System.Windows.Forms.RadioButton();
-            this.buttonClear = new System.Windows.Forms.Button();
             this.buttonSelectFigure = new System.Windows.Forms.Button();
             this.buttonMove = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -62,7 +63,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(26, 24);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(454, 498);
+            this.pictureBox1.Size = new System.Drawing.Size(487, 619);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -136,6 +137,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.textBoxMove);
+            this.groupBox1.Controls.Add(this.labelMove);
             this.groupBox1.Controls.Add(this.textBoxCountPoints);
             this.groupBox1.Controls.Add(this.labelCountPoints);
             this.groupBox1.Controls.Add(this.button1);
@@ -154,9 +157,26 @@
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             // 
+            // textBoxMove
+            // 
+            this.textBoxMove.Location = new System.Drawing.Point(246, 117);
+            this.textBoxMove.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxMove.Name = "textBoxMove";
+            this.textBoxMove.Size = new System.Drawing.Size(123, 27);
+            this.textBoxMove.TabIndex = 21;
+            // 
+            // labelMove
+            // 
+            this.labelMove.AutoSize = true;
+            this.labelMove.Location = new System.Drawing.Point(239, 81);
+            this.labelMove.Name = "labelMove";
+            this.labelMove.Size = new System.Drawing.Size(130, 20);
+            this.labelMove.TabIndex = 20;
+            this.labelMove.Text = "Смещение по X Y";
+            // 
             // textBoxCountPoints
             // 
-            this.textBoxCountPoints.Location = new System.Drawing.Point(239, 108);
+            this.textBoxCountPoints.Location = new System.Drawing.Point(246, 42);
             this.textBoxCountPoints.Name = "textBoxCountPoints";
             this.textBoxCountPoints.Size = new System.Drawing.Size(125, 27);
             this.textBoxCountPoints.TabIndex = 19;
@@ -164,7 +184,7 @@
             // labelCountPoints
             // 
             this.labelCountPoints.AutoSize = true;
-            this.labelCountPoints.Location = new System.Drawing.Point(239, 49);
+            this.labelCountPoints.Location = new System.Drawing.Point(239, 14);
             this.labelCountPoints.Name = "labelCountPoints";
             this.labelCountPoints.Size = new System.Drawing.Size(132, 20);
             this.labelCountPoints.TabIndex = 18;
@@ -233,12 +253,11 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(545, 421);
+            this.comboBox1.Location = new System.Drawing.Point(541, 427);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(211, 28);
+            this.comboBox1.Size = new System.Drawing.Size(194, 28);
             this.comboBox1.TabIndex = 10;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // radioButton5
             // 
@@ -251,7 +270,6 @@
             this.radioButton5.TabStop = true;
             this.radioButton5.Text = "Многоугольник";
             this.radioButton5.UseVisualStyleBackColor = true;
-            this.radioButton5.Click += new System.EventHandler(this.radioButton5_Click);
             // 
             // radioButton6
             // 
@@ -265,7 +283,6 @@
             this.radioButton6.Text = "Треугольник";
             this.radioButton6.UseVisualStyleBackColor = true;
             this.radioButton6.CheckedChanged += new System.EventHandler(this.radioButton6_CheckedChanged);
-            this.radioButton6.Click += new System.EventHandler(this.radioButton6_Click);
             // 
             // radioButton7
             // 
@@ -278,19 +295,9 @@
             this.radioButton7.Text = "SnowMan";
             this.radioButton7.UseVisualStyleBackColor = true;
             // 
-            // buttonClear
-            // 
-            this.buttonClear.Location = new System.Drawing.Point(42, 611);
-            this.buttonClear.Name = "buttonClear";
-            this.buttonClear.Size = new System.Drawing.Size(94, 29);
-            this.buttonClear.TabIndex = 14;
-            this.buttonClear.Text = "Clear";
-            this.buttonClear.UseVisualStyleBackColor = true;
-            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
-            // 
             // buttonSelectFigure
             // 
-            this.buttonSelectFigure.Location = new System.Drawing.Point(544, 469);
+            this.buttonSelectFigure.Location = new System.Drawing.Point(541, 475);
             this.buttonSelectFigure.Name = "buttonSelectFigure";
             this.buttonSelectFigure.Size = new System.Drawing.Size(94, 29);
             this.buttonSelectFigure.TabIndex = 15;
@@ -300,7 +307,7 @@
             // 
             // buttonMove
             // 
-            this.buttonMove.Location = new System.Drawing.Point(662, 469);
+            this.buttonMove.Location = new System.Drawing.Point(643, 475);
             this.buttonMove.Name = "buttonMove";
             this.buttonMove.Size = new System.Drawing.Size(110, 29);
             this.buttonMove.TabIndex = 16;
@@ -315,7 +322,6 @@
             this.ClientSize = new System.Drawing.Size(981, 684);
             this.Controls.Add(this.buttonMove);
             this.Controls.Add(this.buttonSelectFigure);
-            this.Controls.Add(this.buttonClear);
             this.Controls.Add(this.radioButton7);
             this.Controls.Add(this.radioButton6);
             this.Controls.Add(this.radioButton5);
@@ -329,6 +335,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -359,8 +366,9 @@
         private RadioButton radioButton7;
         private TextBox textBoxCountPoints;
         private Label labelCountPoints;
-        private Button buttonClear;
         private Button buttonSelectFigure;
         private Button buttonMove;
+        private TextBox textBoxMove;
+        private Label labelMove;
     }
 }

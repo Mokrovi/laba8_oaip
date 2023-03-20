@@ -15,6 +15,7 @@ namespace laba_8_oaip
             this.y = y;
             this.width = width;
             this.height = height;
+            this.mg = false;
         }
         public Elips()
         {
@@ -38,8 +39,8 @@ namespace laba_8_oaip
         public override void MoveTo(int x, int y)
         {
             this.Selection();
-            this.x = x;
-            this.y = y;
+            this.x += x;
+            this.y += y;
             this.Draw();
         }
     }
